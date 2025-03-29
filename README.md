@@ -23,15 +23,13 @@ Features
 4. Prediction Output and metrics
 5. POC
 
-![image](https://github.com/user-attachments/assets/6025ff74-717e-432d-8d91-66ef9b6ffbef)
-![image](https://github.com/user-attachments/assets/0b7056f1-f0c1-4fe8-a7c5-287a6dc45e07)
-![image](https://github.com/user-attachments/assets/9367abaf-851c-438f-ac8a-a41de2f0ca90)
-![image](https://github.com/user-attachments/assets/05955bad-e0e3-4f6a-9edf-045ad69b5be7)
-
 # Model Evaluation Metrics
 1. Accuracy - 85.39%
 2. Precision - 85.39%
 3. Recall - 85.39%
+
+![image](https://github.com/user-attachments/assets/6025ff74-717e-432d-8d91-66ef9b6ffbef)
+![image](https://github.com/user-attachments/assets/05955bad-e0e3-4f6a-9edf-045ad69b5be7)
 
 # Contributors:
 1. AI Model Development : Jiawen Che, Xinxiao Li, Shiyuan Ruan
