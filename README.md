@@ -38,7 +38,8 @@ Precision - 85.39%
 
 Recall - 85.39%
 
-Contributors
+
+Contributors:
 
 AI Model Development : Jiawen Che, Xinxiao Li, Shiyuan Ruan
 
