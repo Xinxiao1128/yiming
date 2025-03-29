@@ -21,6 +21,7 @@ Features
 4. Prediction Output and metrics
 5. POC
 
-![image](https://github.com/user-attachments/assets/12ce8d6b-c8a0-4599-ad0d-1a5551a5d789)
+![image](https://github.com/user-attachments/assets/6025ff74-717e-432d-8d91-66ef9b6ffbef)
+
 
 
