@@ -10,7 +10,7 @@ from PIL import Image
 import matplotlib.pyplot as plt
 
 # Setting the path
-zip_path = '/content/drive/MyDrive/42174_AI_Studio-yiming/Datasets/archive.zip' 
+zip_path = '/content/drive/MyDrive/42174_AI_Studio-yiming/Datasets/archive.zip'
 extract_path = "/content/extracted"
 
 # Decompress the zip file
@@ -101,7 +101,7 @@ model = keras.Sequential([
     keras.layers.GlobalAveragePooling2D(),
     keras.layers.Dense(256, activation='relu'),
     keras.layers.Dropout(0.5),
-    keras.layers.Dense(38, activation='softmax') 
+    keras.layers.Dense(38, activation='softmax')
 ])
 
 model.compile(
@@ -140,7 +140,7 @@ print("Recall : {:.2f}%".format(recall_score(true_labels, predictions, average='
 
 # Confusion matrix
 cm = confusion_matrix(true_labels, predictions)
-fig, ax = plt.subplots(figsize=(15, 15))
+fig, ax = plt.subplots(figsize=(12, 12))
 disp = ConfusionMatrixDisplay(confusion_matrix=cm)
 disp.plot(ax=ax, cmap='YlGnBu', colorbar=False)
 plt.title("Confusion Matrix")
@@ -170,3 +170,54 @@ plt.legend()
 
 plt.tight_layout()
 plt.show()
+
+# Save model
+model.save("model_resnet50_trained.h5")
+print("✅The model is saved！")
+
+# Print classification report
+from sklearn.metrics import classification_report
+import os
+
+# Class name
+class_dirs = [d for d in os.listdir(val_path) if os.path.isdir(os.path.join(val_path, d))]
+class_names = sorted(class_dirs)  # Alphabetical order
+
+print("Classification report：")
+print(classification_report(true_labels, predictions, target_names=class_names))
+
+# Displays the predicted image
+import matplotlib.pyplot as plt
+import numpy as np
+import tensorflow as tf
+
+# Create a new small dataset for visualisation
+viz_dataset = tf.keras.utils.image_dataset_from_directory(
+    val_path,
+    image_size=img_size,
+    batch_size=6,
+    shuffle=True
+)
+
+# Standardising images
+rescale = Rescaling(1./255)
+viz_dataset = viz_dataset.map(lambda x, y: (rescale(x), y))
+
+# Get some data
+for images, labels in viz_dataset.take(1):
+    # Predicted results
+    predictions_batch = model.predict(images)
+    predicted_classes = np.argmax(predictions_batch, axis=1)
+
+    # Display of images and predicted results
+    plt.figure(figsize=(12, 6))
+    for i in range(min(6, len(images))):
+        plt.subplot(2, 3, i+1)
+        plt.imshow(images[i])
+        true_class = class_names[labels[i]]
+        predicted_class = class_names[predicted_classes[i]]
+        title = f"True: {true_class}\nPred: {predicted_class}"
+        plt.title(title)
+        plt.axis("off")
+    plt.tight_layout()
+    plt.show()
