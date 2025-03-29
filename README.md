@@ -31,14 +31,21 @@ Features
 ![image](https://github.com/user-attachments/assets/05955bad-e0e3-4f6a-9edf-045ad69b5be7)
 
 Model Evaluation Metrics
+
 Accuracy - 85.39%
+
 Precision - 85.39%
+
 Recall - 85.39%
 
 Contributors
+
 AI Model Development : Jiawen Che, Xinxiao Li, Shiyuan Ruan
+
 Data Preprocessing and Visualisation: Jiawen Che, Shiyuan Ruan, Xinxiao Li
+
 Model Evaluation: Xinxiao Li, Jiawen Che 
+
 POC: Xinxiao Li, Jiawen Che
 
 
