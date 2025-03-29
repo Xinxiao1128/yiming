@@ -24,8 +24,6 @@ Features
 5. POC
 
 ![image](https://github.com/user-attachments/assets/6025ff74-717e-432d-8d91-66ef9b6ffbef)
-![image](https://github.com/user-attachments/assets/3e43d309-3a04-4c1a-8334-01ca3a340ce1)
-![image](https://github.com/user-attachments/assets/8a374e6b-f2df-4bf0-8b41-e438c7df6a66)
 ![image](https://github.com/user-attachments/assets/0b7056f1-f0c1-4fe8-a7c5-287a6dc45e07)
 ![image](https://github.com/user-attachments/assets/9367abaf-851c-438f-ac8a-a41de2f0ca90)
 ![image](https://github.com/user-attachments/assets/05955bad-e0e3-4f6a-9edf-045ad69b5be7)
