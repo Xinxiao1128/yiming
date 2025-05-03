@@ -33,14 +33,14 @@ def run_pipeline():
     pipe.add_step(
         name="stage_data",
         base_task_project="examples",
-        base_task_name="Pipeline step 1 dataset artifact",
+        base_task_name="Step 1 - Load Uncompressed Pest Image Dataset",
     )
 
     pipe.add_step(
         name="stage_process",
         parents=["stage_data"],
-        base_task_name="Pipeline step 2 process dataset",
-        base_task_project="examples",
+        base_task_name="Step 2 - Preprocessing (artifact version)",
+        base_task_project="Agri-Pest-Detection",
         parameter_override={
             "General/dataset_task_id": "${stage_data.id}",
             "General/test_size": 0.25,
@@ -51,8 +51,8 @@ def run_pipeline():
     pipe.add_step(
         name="stage_train",
         parents=["stage_process"],
-        base_task_project="examples",
-        base_task_name="Pipeline step 3 train model",
+        base_task_project="Agri-Pest-Detection",
+        base_task_name="Step 3 - Model Training",
         parameter_override={"General/dataset_task_id": "${stage_process.id}"},
     )
 
