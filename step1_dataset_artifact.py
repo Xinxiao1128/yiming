@@ -1,39 +1,37 @@
-# ✅ Step 1: Automatically upload large zip dataset to ClearML Dataset (for Google Colab)
-
 from clearml import Task, Dataset
 import os
 import shutil
 
-# ==== (1) Initialize ClearML Task ====
+# ==== (1) 初始化 ClearML 任务 ====
 task = Task.init(
-    project_name='Agri-Pest-Detection',
-    task_name='Step 1 - Upload archive.zip (Colab)'
+    project_name='Pest Classification',
+    task_name='Step 1 - Upload pest ZIP from Google Drive'
 )
-task.execute_remotely(queue_name='default')  # ✅ Submit to remote ClearML agent
+task.execute_remotely(queue_name='default')  # ✅ 提交给远程执行
 
-# ==== (2) Mount Google Drive ====
+# ==== (2) 挂载 Google Drive ====
 from google.colab import drive
 drive.mount('/content/drive')
 
-# ==== (3) Copy archive.zip to current directory ====
-# ⚠️ Modify the following path according to your actual Google Drive location:
-drive_zip_path = '/content/drive/MyDrive/42174_AI_Studio-yiming/archive.zip'
-local_zip_path = './archive.zip'
+# ==== (3) 指定你 ZIP 的位置 ====
+# ⚠️ 请根据你自己的 Google Drive 路径修改这里
+drive_zip_path = '/content/drive/MyDrive/pest_dataset.zip'
+local_zip_path = './pest_dataset.zip'
 
-# Copy the zip file if it doesn't already exist locally
+# 拷贝压缩包到当前目录
 if not os.path.exists(local_zip_path):
     shutil.copy(drive_zip_path, local_zip_path)
 
-# Ensure the zip file exists
-assert os.path.exists(local_zip_path), "❌ archive.zip not found. Please check the Google Drive path."
+assert os.path.exists(local_zip_path), "❌ ZIP 文件不存在，请确认路径正确。"
 
-# ==== (4) Upload as ClearML Dataset ====
+# ==== (4) 上传为 ClearML Dataset ====
 dataset = Dataset.create(
-    dataset_name='PlantVillage-Zip',
-    dataset_project='Agri-Pest-Detection'
+    dataset_name='Pest Dataset ZIP',
+    dataset_project='Pest Classification'
 )
 dataset.add_files(path=local_zip_path)
 dataset.upload()
 dataset.finalize()
 
-print("✅ archive.zip uploaded successfully and registered as a ClearML Dataset.")
+print("✅ pest_dataset.zip 上传成功，dataset_id:", dataset.id)
+.")
