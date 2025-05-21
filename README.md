@@ -37,12 +37,10 @@ Features
 7. CI/CD
 
 # Model Evaluation Metrics
-POC
+POC (1-3)/Pipeline (4-6)
 1. Accuracy - 85.39%
 2. Precision - 85.39%
 3. Recall - 85.39%
-
-Pipeline
 4. Accuracy - 96.33%
 5. Precision - 62.41%
 6. Recall - 61.08%
