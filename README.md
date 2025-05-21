@@ -1,6 +1,5 @@
 # AI-Assisted Agriculture Pest and Disease Early Detection System
 yiming - Sprint 1 (POC)
-
          Sprint 2 (ClearML Pipeline)
 
 # Introduction
@@ -39,11 +38,11 @@ POC
 1. Accuracy - 85.39%
 2. Precision - 85.39%
 3. Recall - 85.39%
-
 Pipeline
 4. Accuracy - 96.33%
 5. Precision - 62.41%
 6. Recall - 61.08%
+
 
 ![image](https://github.com/user-attachments/assets/6025ff74-717e-432d-8d91-66ef9b6ffbef)
 ![image](https://github.com/user-attachments/assets/05955bad-e0e3-4f6a-9edf-045ad69b5be7)
