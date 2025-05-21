@@ -12,10 +12,16 @@ According to the Food and Agriculture Organization of the United Nations (FAO), 
 # Dataset: archive.zip 
 https://drive.google.com/drive/u/1/folders/14ZGuTEeq0FnbUme3Ab_QS3IoTWs7_WrF 
 The dataset contains 38 categories and consists of about 87K images of healthy and diseased crop leaves. The entire dataset was divided into training and validation sets in the ratio of 80/20 and the catalogue structure was retained. Subsequently a new catalogue containing 33 test images was created for prediction purpose.
+The second part of the dataset has been uploaded into clearml.
 
 # Code: Google colab 
 https://colab.research.google.com/drive/1O_bYJLG3ydt2nmVM6Eu5zik10gxz__Fv?authuser=1
 The current code is only used for POC after training using CNN models.
+
+https://colab.research.google.com/drive/1gMclg0HjoW9470ZN7LSvT79-skTcMsc0?usp=sharing
+https://colab.research.google.com/drive/1Yk-JqXZ7cQddjH5iRJvRO6fU1gszH192?usp=sharing
+These two copies of the code are for manual deployment of the ClearML Pipeline only.
+
 
 Features
 1. Image Decompress
@@ -23,20 +29,32 @@ Features
 3. CNN model-Based Disease Classification
 4. Prediction Output and metrics
 5. POC
+6. Pipeline
+7. CI/CD
 
 # Model Evaluation Metrics
+POC
 1. Accuracy - 85.39%
 2. Precision - 85.39%
 3. Recall - 85.39%
 
+Pipeline
+4. Accuracy - 96.33%
+5. Precision - 62.41%
+6. Recall - 61.08%
+
 ![image](https://github.com/user-attachments/assets/6025ff74-717e-432d-8d91-66ef9b6ffbef)
 ![image](https://github.com/user-attachments/assets/05955bad-e0e3-4f6a-9edf-045ad69b5be7)
+![image](https://github.com/user-attachments/assets/20ae9ac2-fb1f-4d6e-8f97-d69b670ffb34)
+
 
 # Contributors:
 1. AI Model Development : Jiawen Che, Xinxiao Li, Shiyuan Ruan
 2. Data Preprocessing and Visualisation: Jiawen Che, Shiyuan Ruan, Xinxiao Li
 3. Model Evaluation: Xinxiao Li, Jiawen Che
 4. POC: Xinxiao Li, Jiawen Che
+5. Pipeline (Level 1): Xinxiao Li, Shiyuan Ruan
+6. Release note: Jiawen Che
 
 
 
