@@ -49,6 +49,8 @@ POC (1-3)/Pipeline (4-6)
 ![image](https://github.com/user-attachments/assets/6025ff74-717e-432d-8d91-66ef9b6ffbef)
 ![image](https://github.com/user-attachments/assets/05955bad-e0e3-4f6a-9edf-045ad69b5be7)
 ![image](https://github.com/user-attachments/assets/20ae9ac2-fb1f-4d6e-8f97-d69b670ffb34)
+![image](https://github.com/user-attachments/assets/c67a35e5-b4f0-45d8-9068-1ecd56e93a04)
+
 
 
 # Contributors:
@@ -58,6 +60,7 @@ POC (1-3)/Pipeline (4-6)
 4. POC: Xinxiao Li, Jiawen Che
 5. Pipeline (Level 1): Xinxiao Li, Shiyuan Ruan
 6. Release note: Jiawen Che
+7. CI/CD：Xinxiao Li
 
 
 
