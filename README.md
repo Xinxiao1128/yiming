@@ -5,6 +5,8 @@ Sprint 1 (POC)
 
 Sprint 2 (ClearML Pipeline)
 
+Sprint 3 (ClearML CI/CD)
+
 # Introduction
 
 As the global population increases, the scale of agricultural planting expands, and pests and diseases pose an increasing threat to crops. Traditional pest and disease identification methods mainly rely on the experience of farmers and agricultural experts, and are not accurate enough. At the same time, it is often too late to discover the disease, and the cost of prevention and control is higher. Large-scale use of pesticides will also affect the edible safety of agricultural products. This project aims to develop an AI-assisted early identification system for agricultural pests and diseases, using computer vision and deep learning technology to improve the accuracy and timeliness of pest and disease identification, reduce crop losses, and reduce the abuse of pesticides.
