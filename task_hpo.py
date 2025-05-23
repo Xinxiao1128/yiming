@@ -1,153 +1,112 @@
 from clearml import Task
-import numpy as np
-import torch
-import torch.nn as nn
-import torch.optim as optim
-from torch.utils.data import DataLoader, TensorDataset
-from sklearn.metrics import accuracy_score, precision_score, recall_score
-import matplotlib.pyplot as plt
+from clearml.automation import DiscreteParameterRange, HyperParameterOptimizer
+from clearml.automation.optuna import OptimizerOptuna
 import logging
+import sys
+import os
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 task = Task.init(
     project_name='Agri-Pest-Detection',
-    task_name='Step 5 - Final Model Training'
+    task_name='Step 4 - HPO: Train Model',
+    task_type=Task.TaskTypes.optimizer
 )
 
+# Step 2 + Step 3 Task ID
+STEP2_TASK_ID = ''
+STEP3_TASK_ID = ''  
+
+for arg in sys.argv:
+    if arg.startswith("--step3_id="):
+        STEP3_TASK_ID = arg.split("=")[1]
+if not STEP3_TASK_ID:
+    raise ValueError("❌ Missing Step 3 base training task ID")
+
 params = task.connect({
-    'processed_dataset_id': '',  # ← from Step 2
-    'hpo_task_id': '',           # ← from Step 4
+    'processed_dataset_id': STEP2_TASK_ID,
+    'base_train_task_id': STEP3_TASK_ID,
     'test_queue': 'pipeline',
-    'device': 'cuda' if torch.cuda.is_available() else 'cpu'
+    'num_trials': 3,
+    'time_limit_minutes': 30
 })
 
-# Execute remotely if a test_queue is specified (comment out if running locally)
-task.execute_remotely()
+# agent
+if __name__ == "__main__" and params.get("test_queue") and Task.running_locally():
+    task.execute_remotely(queue_name=params["test_queue"])
+    
+hyper_parameters = [
+    DiscreteParameterRange('General/learning_rate', values=[0.0001, 0.0005, 0.001, 0.005]),
+    DiscreteParameterRange('General/batch_size', values=[16, 32, 64]),
+    DiscreteParameterRange('General/weight_decay', values=[1e-6, 1e-5, 1e-4]),
+    DiscreteParameterRange('General/num_epochs', values=[5, 10, 15]),
+    DiscreteParameterRange('General/dropout_rate', values=[0.3, 0.4, 0.5, 0.6])
+]
 
-step2_task = Task.get_task(task_id=params['processed_dataset_id'])
-X_train = np.load(step2_task.artifacts['X_train.npy'].get_local_copy())
-X_test = np.load(step2_task.artifacts['X_test.npy'].get_local_copy())
-y_train = np.load(step2_task.artifacts['y_train.npy'].get_local_copy())
-y_test = np.load(step2_task.artifacts['y_test.npy'].get_local_copy())
-label2id = np.load(step2_task.artifacts['label2id.npy'].get_local_copy(), allow_pickle=True).item()
+optimizer = HyperParameterOptimizer(
+    base_task_id=params['base_train_task_id'],
+    hyper_parameters=hyper_parameters,
+    objective_metric_title='accuracy',         
+    objective_metric_series='validation',      
+    objective_metric_sign='max',
+    optimizer_class=OptimizerOptuna,
+    max_number_of_concurrent_tasks=1,
+    optimization_time_limit=params['time_limit_minutes'] * 60,
+    compute_time_limit=60 * 60,
+    total_max_jobs=params['num_trials'],
+    min_iteration_per_job=0,
+    max_iteration_per_job=9999
+)
 
-hpo_task = Task.get_task(task_id=params['hpo_task_id'])
-best_params = hpo_task.artifacts['best_hyperparameters'].get()
+logger.info("🚀 Starting HPO...")
+optimizer.start_locally()
+optimizer.wait()
 
-batch_size = int(best_params.get('batch_size', 32))
-learning_rate = float(best_params.get('learning_rate', 0.001))
-weight_decay = float(best_params.get('weight_decay', 1e-5))
-dropout_rate = float(best_params.get('dropout_rate', 0.5))
-num_epochs = int(best_params.get('num_epochs', 10))
+top_experiments = optimizer.get_top_experiments(top_k=5)
+logger.info("✅ HPO Finished. Processing results...")
 
-X_train = torch.FloatTensor(X_train.astype(np.float32) / 255.0).permute(0, 3, 1, 2)
-X_test = torch.FloatTensor(X_test.astype(np.float32) / 255.0).permute(0, 3, 1, 2)
-y_train = torch.LongTensor(y_train)
-y_test = torch.LongTensor(y_test)
+results = []
+for task in top_experiments:
+    try:
+        metrics = task.get_last_scalar_metrics()
+        accuracy = metrics.get('accuracy', {}).get('validation', {}).get('last', 0)
+        results.append({
+            'id': task.id,
+            'name': task.name,
+            'accuracy': accuracy,
+            'params': task.get_parameters().get('General', {})
+        })
+    except Exception as e:
+        logger.warning(f"⚠️ Failed to extract result from task {task.id}: {e}")
 
-train_loader = DataLoader(TensorDataset(X_train, y_train), batch_size=batch_size, shuffle=True)
-test_loader = DataLoader(TensorDataset(X_test, y_test), batch_size=batch_size, shuffle=False)
+results.sort(key=lambda x: x['accuracy'], reverse=True)
 
-class PestCNN(nn.Module):
-    def __init__(self, num_classes, dropout_rate):
-        super(PestCNN, self).__init__()
-        self.conv1 = nn.Sequential(
-            nn.Conv2d(3, 32, 3, padding=1), nn.BatchNorm2d(32), nn.ReLU(),
-            nn.Conv2d(32, 32, 3, padding=1), nn.BatchNorm2d(32), nn.ReLU(),
-            nn.MaxPool2d(2)
-        )
-        self.conv2 = nn.Sequential(
-            nn.Conv2d(32, 64, 3, padding=1), nn.BatchNorm2d(64), nn.ReLU(),
-            nn.Conv2d(64, 64, 3, padding=1), nn.BatchNorm2d(64), nn.ReLU(),
-            nn.MaxPool2d(2)
-        )
-        self.conv3 = nn.Sequential(
-            nn.Conv2d(64, 128, 3, padding=1), nn.BatchNorm2d(128), nn.ReLU(),
-            nn.Conv2d(128, 128, 3, padding=1), nn.BatchNorm2d(128), nn.ReLU(),
-            nn.MaxPool2d(2)
-        )
-        self.global_pool = nn.AdaptiveAvgPool2d(1)
-        self.fc = nn.Sequential(
-            nn.Linear(128, 256), nn.ReLU(),
-            nn.Dropout(dropout_rate),
-            nn.Linear(256, num_classes)
-        )
+from clearml import Task as ClearMLTask
 
-    def forward(self, x):
-        x = self.global_pool(self.conv3(self.conv2(self.conv1(x))))
-        x = x.view(x.size(0), -1)
-        return self.fc(x)
+if results:
+    best = results[0]
+    logger.info(f"🏆 Best Model: {best['accuracy']:.4f} ({best['name']})")
 
-device = torch.device(params['device'])
-model = PestCNN(num_classes=len(label2id), dropout_rate=dropout_rate).to(device)
-criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=learning_rate, weight_decay=weight_decay)
-
-def train_one_epoch(model, loader, optimizer, criterion, device):
-    model.train()
-    total_loss, correct = 0, 0
-    for x, y in loader:
-        x, y = x.to(device), y.to(device)
-        optimizer.zero_grad()
-        out = model(x)
-        loss = criterion(out, y)
-        loss.backward()
-        optimizer.step()
-        total_loss += loss.item()
-        correct += (out.argmax(1) == y).sum().item()
-    return total_loss / len(loader), correct / len(loader.dataset)
-
-def evaluate(model, loader, criterion, device):
-    model.eval()
-    total_loss, correct = 0, 0
-    y_true, y_pred = [], []
-    with torch.no_grad():
-        for x, y in loader:
-            x, y = x.to(device), y.to(device)
-            out = model(x)
-            loss = criterion(out, y)
-            total_loss += loss.item()
-            pred = out.argmax(1)
-            correct += (pred == y).sum().item()
-            y_true.extend(y.cpu().numpy())
-            y_pred.extend(pred.cpu().numpy())
-    return (
-        total_loss / len(loader),
-        correct / len(loader.dataset),
-        precision_score(y_true, y_pred, average='macro'),
-        recall_score(y_true, y_pred, average='macro')
+    upload_task = ClearMLTask.create(
+        task_name='Step 4 - HPO Artifact Upload',
+        project_name='Agri-Pest-Detection',
+        task_type=ClearMLTask.TaskTypes.custom
     )
 
-train_accs, val_accs = [], []
-for epoch in range(num_epochs):
-    train_loss, train_acc = train_one_epoch(model, train_loader, optimizer, criterion, device)
-    val_loss, val_acc, precision, recall = evaluate(model, test_loader, criterion, device)
+    upload_task.set_comment("Automatically uploading HPO results (best model info)")
+    upload_task.connect(best)
+    upload_task.mark_started()
 
-    train_accs.append(train_acc)
-    val_accs.append(val_acc)
+    try:
+        upload_task.upload_artifact("best_experiment_id", best['id'])
+        upload_task.upload_artifact("best_accuracy", best['accuracy'])
+        upload_task.upload_artifact("best_hyperparameters", best['params'])
+        logger.info("✅ Artifacts uploaded successfully in subtask.")
+    except Exception as e:
+        logger.warning(f"❌ Failed to upload artifacts: {e}")
 
-    print(f"[Epoch {epoch+1}/{num_epochs}] Train Acc: {train_acc:.4f} | Val Acc: {val_acc:.4f}")
+    upload_task.mark_closed()
+    logger.info(f"📦 Artifacts saved in subtask: {upload_task.artifacts}")
 
-    task.get_logger().report_scalar("accuracy", "train", iteration=epoch, value=train_acc)
-    task.get_logger().report_scalar("accuracy", "validation", iteration=epoch, value=val_acc)
-    task.get_logger().report_scalar("precision", "val", iteration=epoch, value=precision)
-    task.get_logger().report_scalar("recall", "val", iteration=epoch, value=recall)
-
-torch.save(model.state_dict(), "final_model.pth")
-task.upload_artifact("final_model_weights", artifact_object="final_model.pth")
-
-plt.figure(figsize=(6, 4))
-plt.plot(train_accs, label='Train Acc')
-plt.plot(val_accs, label='Val Acc')
-plt.title("Accuracy Curve")
-plt.xlabel("Epoch")
-plt.ylabel("Accuracy")
-plt.legend()
-plt.tight_layout()
-plt.savefig("final_acc_curve.png")
-task.upload_artifact("accuracy_curve", artifact_object="final_acc_curve.png")
-
-task.get_logger().report_single_value("final_val_accuracy", val_acc)
-task.get_logger().report_single_value("final_val_precision", precision)
-task.get_logger().report_single_value("final_val_recall", recall)
-
-print("✅ Final model training completed.")
+logger.info("✅ Step 4 - HPO completed.")
