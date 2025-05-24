@@ -18,7 +18,6 @@ task = Task.init(
 STEP2_TASK_ID = '97b92047cc62415e860d96e531e9dbd4'
 STEP3_TASK_ID = '8a99258673cd4e02a2b788d5b9437d9a'  
 
-# 支持从命令行参数传入
 for arg in sys.argv:
     if arg.startswith("--step3_id="):
         STEP3_TASK_ID = arg.split("=")[1]
