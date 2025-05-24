@@ -15,9 +15,10 @@ task = Task.init(
 )
 
 # Step 2 + Step 3 Task ID
-STEP2_TASK_ID = ''
-STEP3_TASK_ID = ''  
+STEP2_TASK_ID = '97b92047cc62415e860d96e531e9dbd4'
+STEP3_TASK_ID = '8a99258673cd4e02a2b788d5b9437d9a'  
 
+# 支持从命令行参数传入
 for arg in sys.argv:
     if arg.startswith("--step3_id="):
         STEP3_TASK_ID = arg.split("=")[1]
@@ -28,7 +29,7 @@ params = task.connect({
     'processed_dataset_id': STEP2_TASK_ID,
     'base_train_task_id': STEP3_TASK_ID,
     'test_queue': 'pipeline',
-    'num_trials': 3,
+    'num_trials': 5,
     'time_limit_minutes': 30
 })
 
@@ -47,8 +48,8 @@ hyper_parameters = [
 optimizer = HyperParameterOptimizer(
     base_task_id=params['base_train_task_id'],
     hyper_parameters=hyper_parameters,
-    objective_metric_title='accuracy',         
-    objective_metric_series='validation',      
+    objective_metric_title='accuracy',       
+    objective_metric_series='validation',    
     objective_metric_sign='max',
     optimizer_class=OptimizerOptuna,
     max_number_of_concurrent_tasks=1,
@@ -106,7 +107,7 @@ if results:
     except Exception as e:
         logger.warning(f"❌ Failed to upload artifacts: {e}")
 
-    upload_task.mark_closed()
+    upload_task.close()  
     logger.info(f"📦 Artifacts saved in subtask: {upload_task.artifacts}")
 
 logger.info("✅ Step 4 - HPO completed.")
