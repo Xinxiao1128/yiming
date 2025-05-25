@@ -5,7 +5,7 @@ Sprint 1 (POC)
 
 Sprint 2 (ClearML Pipeline)
 
-Sprint 3 (ClearML CI/CD)
+Sprint 3 (ClearML CI/CD、HPO、GUI)
 
 # Introduction
 
@@ -28,15 +28,18 @@ https://colab.research.google.com/drive/1gMclg0HjoW9470ZN7LSvT79-skTcMsc0?usp=sh
 https://colab.research.google.com/drive/1Yk-JqXZ7cQddjH5iRJvRO6fU1gszH192?usp=sharing
 These two copies of the code are for manual deployment of the ClearML Pipeline only.
 
+https://colab.research.google.com/drive/1Qu5NwCSDJRRKLEWnWeThLjcWOOyaC0GG?usp=sharing
+https://colab.research.google.com/drive/1Yk-JqXZ7cQddjH5iRJvRO6fU1gszH192?usp=sharing
 
-Features
+# Features
 1. Image Decompress
 2. Preprocessing
 3. CNN model-Based Disease Classification
 4. Prediction Output and metrics
 5. POC
-6. Pipeline
+6. Pipeline level 1
 7. CI/CD
+8. Pipeline level 2 (HPO+Final)
 
 # Model Evaluation Metrics
 POC (1-3)/Pipeline (4-6)
@@ -53,7 +56,14 @@ POC (1-3)/Pipeline (4-6)
 ![image](https://github.com/user-attachments/assets/20ae9ac2-fb1f-4d6e-8f97-d69b670ffb34)
 ![image](https://github.com/user-attachments/assets/c67a35e5-b4f0-45d8-9068-1ecd56e93a04)
 
-
+# GUI
+<img width="176" alt="1748177453716" src="https://github.com/user-attachments/assets/8318823b-2cb5-46fc-9928-ec6b3415b543" />
+<img width="173" alt="1748177463934" src="https://github.com/user-attachments/assets/917f46d0-132f-46f7-8cbc-90f59f5177f9" />
+![be576f3d84876555bfe5c2c7f77d121](https://github.com/user-attachments/assets/5a05d210-327f-4e8c-9cdc-45f44b079357)
+![2b19eeacb4df4ab8506bd5ad5f6a8cd](https://github.com/user-attachments/assets/fc6957a9-722a-40ef-890b-2f2563257f7d)
+![a9ed5441f58769ce98abf7022a9eb83](https://github.com/user-attachments/assets/c3a4c57c-5741-49fa-b633-7eda965aaf83)
+![9c16cbeb581dd8fd0ecb71625b51f21](https://github.com/user-attachments/assets/b926d855-c2db-4ed8-9f15-f5bb79e79260)
+![679b19bfd6b6210e9f4ff01ef4c7fbf](https://github.com/user-attachments/assets/f2128c50-3d06-44e4-8428-0c063bd8380b)
 
 # Contributors:
 1. AI Model Development : Jiawen Che, Xinxiao Li, Shiyuan Ruan
@@ -63,11 +73,5 @@ POC (1-3)/Pipeline (4-6)
 5. Pipeline (Level 1): Xinxiao Li, Shiyuan Ruan
 6. Release note: Jiawen Che
 7. CI/CD：Xinxiao Li
-
-
-
-
-
-
-
-
+8. Pipeline (Level 2): Xinxiao Li, Shiyuan Ruan
+9. Release note: Xinxiao Li, Jiawen Che
