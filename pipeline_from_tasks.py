@@ -27,7 +27,14 @@ def run_pipeline():
         base_task_name="Step 1 - Load Uncompressed Pest Image Dataset",
         execution_queue=EXECUTION_QUEUE
     )
-
+    
+    # Step 1 - Dataset (cached)
+    # pipe.add_step(
+        # name="stage_data",
+        # base_task_id="Step 1 task id",
+        # cache_executed_step=True
+    # )
+    
     # Step 2 - Preprocessing
     pipe.add_step(
         name="stage_process",
@@ -41,6 +48,14 @@ def run_pipeline():
             "General/random_state": 42
         }
     )
+    
+    # Step 2 - Preprocessing (cached)
+    # pipe.add_step(
+        # name="stage_process",
+        # parents=["stage_data"],
+        # base_task_id="Step 2 task id",
+        # cache_executed_step=True
+    # )
 
     # Step 3 - Initial training
     pipe.add_step(
