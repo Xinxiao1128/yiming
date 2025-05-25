@@ -15,8 +15,8 @@ task = Task.init(
 )
 
 # Step 2 + Step 3 Task ID
-STEP2_TASK_ID = '97b92047cc62415e860d96e531e9dbd4'
-STEP3_TASK_ID = '8a99258673cd4e02a2b788d5b9437d9a'  
+STEP2_TASK_ID = ''
+STEP3_TASK_ID = ''  
 
 for arg in sys.argv:
     if arg.startswith("--step3_id="):
