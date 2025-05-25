@@ -14,8 +14,8 @@ task = Task.init(
 )
 
 params = task.connect({
-    'processed_dataset_id': '97b92047cc62415e860d96e531e9dbd4',  # ← from Step 2
-    'hpo_task_id': '39b5d93fd48b4418904218b46950ed56',           # ← from Step 4
+    'processed_dataset_id': '',  # ← from Step 2
+    'hpo_task_id': '',           # ← from Step 4
     'test_queue': 'pipeline',
     'device': 'cuda' if torch.cuda.is_available() else 'cpu'
 })
