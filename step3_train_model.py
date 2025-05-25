@@ -23,8 +23,8 @@ task = Task.init(
 
 # Connect parameters
 params = task.connect({
-    'step2_task_id': '97b92047cc62415e860d96e531e9dbd4',
-    'processed_dataset_id': '97b92047cc62415e860d96e531e9dbd4',
+    'step2_task_id': '',
+    'processed_dataset_id': '',
     'batch_size': 32,
     'num_epochs': 10,
     'learning_rate': 0.001,
