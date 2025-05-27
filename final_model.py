@@ -14,9 +14,13 @@ task = Task.init(
 )
 
 params = task.connect({
-    'processed_dataset_id': '',  # ← from Step 2
-    'hpo_task_id': '',           # ← from Step 4
+    'processed_dataset_id': '',  # 必须从 Step 2 继承
     'test_queue': 'pipeline',
+    'learning_rate': 0.001,
+    'batch_size': 16,
+    'weight_decay': 1e-5,
+    'dropout_rate': 0.5,
+    'num_epochs': 3,
     'device': 'cuda' if torch.cuda.is_available() else 'cpu'
 })
 
@@ -30,14 +34,11 @@ y_train = np.load(step2_task.artifacts['y_train.npy'].get_local_copy())
 y_test = np.load(step2_task.artifacts['y_test.npy'].get_local_copy())
 label2id = np.load(step2_task.artifacts['label2id.npy'].get_local_copy(), allow_pickle=True).item()
 
-hpo_task = Task.get_task(task_id=params['hpo_task_id'])
-best_params = hpo_task.artifacts['best_hyperparameters'].get()
-
-batch_size = int(best_params.get('batch_size', 32))
-learning_rate = float(best_params.get('learning_rate', 0.001))
-weight_decay = float(best_params.get('weight_decay', 1e-5))
-dropout_rate = float(best_params.get('dropout_rate', 0.5))
-num_epochs = int(best_params.get('num_epochs', 10))
+batch_size = int(params.get('batch_size'))
+learning_rate = float(params.get('learning_rate'))
+weight_decay = float(params.get('weight_decay'))
+dropout_rate = float(params.get('dropout_rate'))
+num_epochs = int(params.get('num_epochs'))
 
 X_train = torch.FloatTensor(X_train.astype(np.float32) / 255.0).permute(0, 3, 1, 2)
 X_test = torch.FloatTensor(X_test.astype(np.float32) / 255.0).permute(0, 3, 1, 2)
