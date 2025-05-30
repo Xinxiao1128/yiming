@@ -1,5 +1,5 @@
 # AI-Assisted Agriculture Pest and Disease Early Detection System
-yiming
+yiming - Jiawen Che, Xinxiao Li, Shiyuan Ruan
 
 Sprint 1 (POC)
 
