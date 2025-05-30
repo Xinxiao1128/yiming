@@ -31,7 +31,7 @@ https://colab.research.google.com/drive/1Yk-JqXZ7cQddjH5iRJvRO6fU1gszH192?usp=sh
 
 These two copies of the code are for manual deployment of the ClearML Pipeline only.
 
-https://drive.google.com/file/d/1PEqulqMgO9NXDK0Jjq5e-EXtNC2_M90V/view?usp=sharing
+https://drive.google.com/file/d/1lnjnZl_4YToYaQ9jGbPQhlfZ2R80mS1z/view?usp=sharing
 https://colab.research.google.com/drive/1Qu5NwCSDJRRKLEWnWeThLjcWOOyaC0GG?usp=sharing
 https://colab.research.google.com/drive/1iNHRLfJec6f6ZEn33Zx0-Brv_ph_uRKq?usp=sharing
 https://colab.research.google.com/drive/1_0o3TJF3hx2kAT7gaRs_CuhFLABNNfqJ?usp=sharing
