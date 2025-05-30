@@ -8,8 +8,8 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score
 import matplotlib.pyplot as plt
 import logging
 
-import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "-1"  
+# import os
+# os.environ["CUDA_VISIBLE_DEVICES"] = "-1"  # ⬆️ 强制禁用 GPU
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -23,8 +23,8 @@ task = Task.init(
 
 # Connect parameters
 params = task.connect({
-    'step2_task_id': '',
-    'processed_dataset_id': '',
+    'step2_task_id': '8bea97c54a3f44d2a30afb4319388612',
+    'processed_dataset_id': '8bea97c54a3f44d2a30afb4319388612',
     'batch_size': 32,
     'num_epochs': 10,
     'learning_rate': 0.001,
@@ -33,7 +33,7 @@ params = task.connect({
     'test_queue': 'pipeline'
 })
 
-# quene pipeline
+# ⬆️ 如果是本地执行，并指定了 queue，则自动推送到 agent
 if __name__ == "__main__" and params.get("test_queue") and Task.running_locally():
     task.execute_remotely(queue_name=params["test_queue"])
 
