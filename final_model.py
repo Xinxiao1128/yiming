@@ -14,13 +14,13 @@ task = Task.init(
 )
 
 params = task.connect({
-    'processed_dataset_id': '',  # 必须从 Step 2 继承
+    'processed_dataset_id': '',  # Step 2
     'test_queue': 'pipeline',
     'learning_rate': 0.001,
     'batch_size': 16,
     'weight_decay': 1e-5,
     'dropout_rate': 0.5,
-    'num_epochs': 3,
+    'num_epochs': 10,
     'device': 'cuda' if torch.cuda.is_available() else 'cpu'
 })
 
