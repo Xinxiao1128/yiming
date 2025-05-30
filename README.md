@@ -17,19 +17,26 @@ According to the Food and Agriculture Organization of the United Nations (FAO), 
 
 # Dataset: archive.zip 
 https://drive.google.com/drive/u/1/folders/14ZGuTEeq0FnbUme3Ab_QS3IoTWs7_WrF 
+
 The dataset contains 38 categories and consists of about 87K images of healthy and diseased crop leaves. The entire dataset was divided into training and validation sets in the ratio of 80/20 and the catalogue structure was retained. Subsequently a new catalogue containing 33 test images was created for prediction purpose.
 The second part of the dataset has been uploaded into clearml.
 
 # Code: Google colab 
 https://colab.research.google.com/drive/1O_bYJLG3ydt2nmVM6Eu5zik10gxz__Fv?authuser=1
+
 The current code is only used for POC after training using CNN models.
 
 https://colab.research.google.com/drive/1gMclg0HjoW9470ZN7LSvT79-skTcMsc0?usp=sharing
 https://colab.research.google.com/drive/1Yk-JqXZ7cQddjH5iRJvRO6fU1gszH192?usp=sharing
+
 These two copies of the code are for manual deployment of the ClearML Pipeline only.
 
+https://drive.google.com/file/d/1PEqulqMgO9NXDK0Jjq5e-EXtNC2_M90V/view?usp=sharing
 https://colab.research.google.com/drive/1Qu5NwCSDJRRKLEWnWeThLjcWOOyaC0GG?usp=sharing
-https://colab.research.google.com/drive/1Yk-JqXZ7cQddjH5iRJvRO6fU1gszH192?usp=sharing
+https://colab.research.google.com/drive/1iNHRLfJec6f6ZEn33Zx0-Brv_ph_uRKq?usp=sharing
+https://colab.research.google.com/drive/1_0o3TJF3hx2kAT7gaRs_CuhFLABNNfqJ?usp=sharing
+
+After conducting multiple experiments, we selected a suitable one for final submission.
 
 # Features
 1. Image Decompress
@@ -50,11 +57,23 @@ POC (1-3)/Pipeline (4-6)
 5. Precision - 62.41%
 6. Recall - 61.08%
 
+# Best Model (After conducting multiple experiments, we finally selected a relatively stable and accurate algorithm with good accuracy and other parameters)
+1. Best Accuracy - 95.31%
+2. Batch Aize - 64
+3. Dropout Rate - 0.5
+4. Learning Rate - 0.0001
+5. Weight Decay - 0.0001
+6. Epochs - 10
+
 
 ![image](https://github.com/user-attachments/assets/6025ff74-717e-432d-8d91-66ef9b6ffbef)
 ![image](https://github.com/user-attachments/assets/05955bad-e0e3-4f6a-9edf-045ad69b5be7)
 ![image](https://github.com/user-attachments/assets/20ae9ac2-fb1f-4d6e-8f97-d69b670ffb34)
 ![image](https://github.com/user-attachments/assets/c67a35e5-b4f0-45d8-9068-1ecd56e93a04)
+<img width="1217" alt="image" src="https://github.com/user-attachments/assets/a1390f0f-1687-435f-b86a-3f0dea69a0e8" />
+<img width="1219" alt="image" src="https://github.com/user-attachments/assets/d794a2db-13eb-48ee-8fcb-c7e441d5dfb1" />
+<img width="1214" alt="image" src="https://github.com/user-attachments/assets/e5d569ab-f397-4bbc-bb61-3dfe17d4f7eb" />
+
 
 # GUI
 <img width="176" alt="1748177453716" src="https://github.com/user-attachments/assets/8318823b-2cb5-46fc-9928-ec6b3415b543" />
@@ -66,6 +85,7 @@ POC (1-3)/Pipeline (4-6)
 <img width="182" alt="1748177860323" src="https://github.com/user-attachments/assets/72e7b106-0681-4b3a-9913-3928a79207ad" />
 
 # Contributors:
+The entire assignment was divided fairly among the three of us, and the atmosphere within the group was good, with everyone working together smoothly.
 1. AI Model Development : Jiawen Che, Xinxiao Li, Shiyuan Ruan
 2. Data Preprocessing and Visualisation: Jiawen Che, Shiyuan Ruan, Xinxiao Li
 3. Model Evaluation: Xinxiao Li, Jiawen Che
@@ -75,3 +95,4 @@ POC (1-3)/Pipeline (4-6)
 7. CI/CD：Xinxiao Li
 8. Pipeline (Level 2): Xinxiao Li, Shiyuan Ruan
 9. Release note: Xinxiao Li, Jiawen Che
+10. Presentation and Oral defence - Jiawen Che, Xinxiao Li, Shiyuan Ruan
