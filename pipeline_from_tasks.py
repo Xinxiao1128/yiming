@@ -27,14 +27,7 @@ def run_pipeline():
         base_task_name="Step 1 - Load Uncompressed Pest Image Dataset",
         execution_queue=EXECUTION_QUEUE
     )
-    
-    # Step 1 - Dataset (cached)
-    # pipe.add_step(
-        # name="stage_data",
-        # base_task_id="Step 1 task id",
-        # cache_executed_step=True
-    # )
-    
+
     # Step 2 - Preprocessing
     pipe.add_step(
         name="stage_process",
@@ -48,14 +41,6 @@ def run_pipeline():
             "General/random_state": 42
         }
     )
-    
-    # Step 2 - Preprocessing (cached)
-    # pipe.add_step(
-        # name="stage_process",
-        # parents=["stage_data"],
-        # base_task_id="Step 2 task id",
-        # cache_executed_step=True
-    # )
 
     # Step 3 - Initial training
     pipe.add_step(
@@ -67,7 +52,7 @@ def run_pipeline():
         parameter_override={
             "General/processed_dataset_id": "${stage_process.id}",  # ✅ FIXED
             "General/test_queue": EXECUTION_QUEUE,
-            "General/num_epochs": 20,
+            "General/num_epochs": 10,
             "General/batch_size": 16,
             "General/learning_rate": 1e-3,
             "General/weight_decay": 1e-5
@@ -84,7 +69,7 @@ def run_pipeline():
         parameter_override={
             "General/processed_dataset_id": "${stage_process.id}",  # ✅ FIXED
             "General/test_queue": EXECUTION_QUEUE,
-            "General/num_trials": 4,
+            "General/num_trials": 5,
             "General/time_limit_minutes": 20,
             "General/run_as_service": False,
             "General/dataset_task_id": "${stage_data.id}",
@@ -100,8 +85,12 @@ def run_pipeline():
         base_task_name="Step 5 - Final Model Training",
         execution_queue=EXECUTION_QUEUE,
         parameter_override={
-            "General/processed_dataset_id": "${stage_process.id}",  # ✅ FIXED
-            "General/hpo_task_id": "${stage_hpo.id}",
+            "General/processed_dataset_id": "${stage_process.id}",  
+            "General/learning_rate": 0.001,
+            "General/batch_size": 16,
+            "General/num_epochs": 10,
+            "General/dropout_rate": 0.5,
+            "General/weight_decay": 1e-5,
             "General/test_queue": EXECUTION_QUEUE
         }
     )
