@@ -3,7 +3,7 @@ yiming - Jiawen Che, Xinxiao Li, Shiyuan Ruan
 
 Sprint 1 (POC)
 
-Sprint 2 (ClearML Pipeline)
+Sprint 2 (ClearML Pipeline) - Doing Sprint 2 needs to be done with the code task with Sprint 2.
 
 Sprint 3 (ClearML CI/CD、HPO、GUI)
 
