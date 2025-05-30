@@ -22,7 +22,7 @@ The dataset contains 38 categories and consists of about 87K images of healthy a
 The second part of the dataset has been uploaded into clearml.
 
 # Code: Google colab 
-https://colab.research.google.com/drive/1O_bYJLG3ydt2nmVM6Eu5zik10gxz__Fv?authuser=1
+https://colab.research.google.com/drive/1O_bYJLG3ydt2nmVM6Eu5zik10gxz__Fv?usp=sharing
 
 The current code is only used for POC after training using CNN models.
 
